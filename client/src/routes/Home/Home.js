@@ -2,15 +2,13 @@ import React from 'react'
 import { Header } from 'semantic-ui-react'
 
 const MainLayout = props => {
-  console.log('props:: ', props)
   return (
     <div>
-      <Header as="h1">Semantic UI React Fixed Template</Header>
-      <p>This is a basic fixed menu template using fixed size containers.</p>
-      <p>
-        A text container is used for the main container, which is useful for
-        single column layouts.
-      </p>
+      <Header as="h1">
+        A simple task list app to illustrate apollo with graphql
+      </Header>
+      <p>Public tasks link subscriptions to make it sudo real-time</p>
+      <p>Private tasks link uses polling on a 5 second interval</p>
     </div>
   )
 }
