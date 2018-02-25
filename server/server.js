@@ -4,7 +4,6 @@ import bodyParser from 'body-parser'
 import schema from './data/schema'
 import models from './models'
 import { setupLocalLogin } from './localLogin'
-import { SubscriptionServer } from 'subscriptions-transport-ws'
 import jwt from 'express-jwt'
 import cors from 'cors'
 
