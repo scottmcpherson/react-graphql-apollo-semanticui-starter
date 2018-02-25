@@ -3,6 +3,7 @@ import { List } from 'semantic-ui-react'
 import gql from 'graphql-tag'
 import { graphql } from 'react-apollo'
 import DeleteTask from '../DeleteTask'
+
 const TasksList = ({ data: { loading, error, publicTasks } }) => {
   if (loading) {
     return <p>Loading ...</p>
