@@ -15,8 +15,16 @@ const resolvers = {
       return loginInUser
     },
     publicTasks: async (root, {}) => {
-      const tasks = await Task.findAll({ attributes: ['id', 'title'] })
-      return tasks
+      return await Task.findAll({
+        where: { isPublic: true },
+        attributes: ['id', 'title']
+      })
+    },
+    privateTasks: async (root, {}, { user }) => {
+      if (!user) {
+        throw new Error('Invalid token')
+      }
+      return await Task.findAll({ where: { UserId: user.id, isPublic: false } })
     }
   },
   Mutation: {
@@ -73,9 +81,20 @@ const resolvers = {
     },
     addPublicTask: async (root, { title }) => {
       const task = await Task.create({
-        title
+        title,
+        isPublic: true
       })
       return task
+    },
+    addPrivateTask: async (root, { title }, { user }) => {
+      if (!user) {
+        throw new Error('Invalid token')
+      }
+      return await Task.create({
+        title,
+        UserId: user.id,
+        isPublic: false
+      })
     },
     deleteTask: async (root, { id }) => {
       const task = await Task.destroy({ where: { id } })

@@ -3,9 +3,8 @@ import Signup from './routes/SignUp'
 import LogIn from './routes/LogIn'
 import ForgotPassword from './routes/ForgotPassword'
 import PublicTasks from './routes/PublicTasks'
-// import Sport from './routes/Sport'
+import PrivateTasks from './routes/PrivateTasks'
 import MainLayout from './layouts/MainLayout'
-// import LoginLayout from './layouts/LoginLayout'
 
 // Each logical "route" has two components, one for
 // the sidebar and one for the main area. We want to
@@ -24,17 +23,12 @@ const routes = [
     main: PublicTasks,
     layout: MainLayout
   },
-  // {
-  //   path: '/sports',
-  //   exact: true,
-  //   main: Sport,
-  //   layout: MainLayout
-  // },
-  // {
-  //   path: '/sports/:sportName',
-  //   main: Sport,
-  //   layout: MainLayout
-  // },
+  {
+    path: '/private-tasks',
+    exact: true,
+    main: PrivateTasks,
+    layout: MainLayout
+  },
   {
     path: '/signup',
     main: Signup,

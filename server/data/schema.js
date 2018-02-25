@@ -8,6 +8,7 @@ type Query {
   sports(limit: Int): [Sport]
   sportMatches(sportName: String): [Match]
   publicTasks: [Task]
+  privateTasks: [Task]
 }
 
 type User {
@@ -43,6 +44,8 @@ type Status {
 type Task {
   id: ID!
   title: String!
+  isPublic: Boolean
+  UserId: ID
 }
 
 type Mutation {
@@ -51,6 +54,7 @@ type Mutation {
   forgotPassword(email: String!): Message
   resetPassword(password: String!, token: String!): Message
   addPublicTask(title: String!): Task
+  addPrivateTask(title: String!): Task
   deleteTask(id: ID!): Status
 }
 `

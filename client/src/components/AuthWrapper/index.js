@@ -73,12 +73,13 @@ class AuthWrapper extends React.Component {
   onLogout = () => {
     this.setState({ user: null })
     this.props.client.resetStore()
-    localStorage.setItem('token', null)
+    localStorage.removeItem('token')
     this.props.history.push('/login')
   }
 
   renderChildren() {
-    const { children } = this.props
+    const { children, data } = this.props
+    const { loading } = data
     const { currentUser } = this.state
     const { onLogin, onSignUp, onLogout, onForgotPassword } = this
 
@@ -88,7 +89,8 @@ class AuthWrapper extends React.Component {
         onLogin,
         onSignUp,
         onLogout,
-        onForgotPassword
+        onForgotPassword,
+        isFetchingUser: loading
       })
     )
   }
