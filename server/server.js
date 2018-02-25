@@ -4,8 +4,9 @@ import bodyParser from 'body-parser'
 import schema from './data/schema'
 import models from './models'
 import { setupLocalLogin } from './localLogin'
-import cors from 'cors'
+import { SubscriptionServer } from 'subscriptions-transport-ws'
 import jwt from 'express-jwt'
+import cors from 'cors'
 
 require('dotenv').config()
 
@@ -15,10 +16,6 @@ const app = express()
 
 app.use(cors())
 app.use(bodyParser.urlencoded({ extended: true }))
-// app.use(bodyParser.json())
-
-// setupLocalLogin(app)
-
 app.use(
   '/graphql',
   bodyParser.json(),

@@ -7,8 +7,11 @@ const MainLayout = props => {
       <Header as="h1">
         A simple task list app to illustrate apollo with graphql
       </Header>
-      <p>Public tasks link subscriptions to make it sudo real-time</p>
-      <p>Private tasks link uses polling on a 5 second interval</p>
+      <p>
+        Private and public tasks use polling on a 5 second interval to keep the
+        data up to date. At a later point, it might be worth exploring web
+        sockets using apollos network interface.
+      </p>
     </div>
   )
 }
