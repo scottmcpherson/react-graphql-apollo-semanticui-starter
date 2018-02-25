@@ -4,7 +4,6 @@ import { Route } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 
 const MainLayout = ({ client, component: Component, ...rest }) => {
-  console.log('rest:', rest)
   return (
     <Route
       {...rest}
@@ -16,8 +15,11 @@ const MainLayout = ({ client, component: Component, ...rest }) => {
                 Project Name
               </Menu.Item>
 
-              <Menu.Item as={Link} to="/tasks" header>
-                Tasks
+              <Menu.Item as={Link} to="/public-tasks" header>
+                Public Tasks
+              </Menu.Item>
+              <Menu.Item as={Link} to="/public-tasks" header>
+                Private Tasks
               </Menu.Item>
 
               <Menu.Menu position="right">

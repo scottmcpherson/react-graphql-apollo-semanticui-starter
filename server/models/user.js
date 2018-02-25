@@ -5,5 +5,9 @@ module.exports = (sequelize, DataTypes) => {
     password: DataTypes.STRING
   })
 
+  User.associate = function(models) {
+    User.hasMany(models.Task)
+  }
+
   return User
 }

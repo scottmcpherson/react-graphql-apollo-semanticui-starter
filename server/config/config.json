@@ -2,7 +2,7 @@
   "development": {
     "username": "root",
     "password": "root",
-    "database": "sports_development",
+    "database": "graphql_starter_development",
     "host": "localhost",
     "dialect": "mysql",
     "port": "8889"

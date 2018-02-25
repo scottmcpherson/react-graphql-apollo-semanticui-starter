@@ -3,28 +3,7 @@ const db = require('../models')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const User = db.User
-
-const sports = {
-  sports: [
-    { id: 1, name: 'football' },
-    { id: 2, name: 'basketball' },
-    { id: 3, name: 'baseball' }
-  ],
-  matches: [
-    { id: 1, sport: 'football', homeTeam: 'Bucs', awayTeam: 'Falcons' },
-    { id: 2, sport: 'basketball', homeTeam: 'Nics', awayTeam: 'Heat' },
-    { id: 3, sport: 'baseball', homeTeam: 'Braves', awayTeam: 'Yankees' }
-  ],
-  findAll() {
-    return this.sports
-  },
-  getMatches(sportName) {
-    return this.matches.filter(match => match.sport === sportName)
-  },
-  getSport(sportName) {
-    return this.sports.find(sport => sport.Name === sportName)
-  }
-}
+const Task = db.Task
 
 const resolvers = {
   Query: {
@@ -35,11 +14,9 @@ const resolvers = {
       const loginInUser = await User.findOne({ where: { id: user.id } })
       return loginInUser
     },
-    sportMatches(root, { sportName }) {
-      return sports.getMatches(sportName)
-    },
-    sports(root, { limit }, context) {
-      return sports.findAll().slice(0, limit)
+    publicTasks: async (root, {}) => {
+      const tasks = await Task.findAll({ attributes: ['id', 'title'] })
+      return tasks
     }
   },
   Mutation: {
@@ -93,17 +70,16 @@ const resolvers = {
       console.log(`Reset password here`)
 
       return { message: 'Success' }
-    }
-  },
-  Sport: {
-    matches(sport) {
-      return sports.getMatches(sport.name)
-    }
-  },
-  Match: {
-    sport(match) {
-      const { sport } = match
-      return sports.getSport(sport.sport)
+    },
+    addPublicTask: async (root, { title }) => {
+      const task = await Task.create({
+        title
+      })
+      return task
+    },
+    deleteTask: async (root, { id }) => {
+      const task = await Task.destroy({ where: { id } })
+      return { status: 'ok' }
     }
   }
 }

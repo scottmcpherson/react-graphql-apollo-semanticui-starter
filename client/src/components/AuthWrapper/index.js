@@ -61,7 +61,6 @@ class AuthWrapper extends React.Component {
     forgotPassword(email)
       .then(({ data: { forgotPassword } }) => {
         // TODO: Implement
-        console.log('forgotPassword:: ', forgotPassword)
         this.setState({
           isFormSubmitting: false
         })

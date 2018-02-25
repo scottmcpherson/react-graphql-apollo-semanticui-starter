@@ -2,6 +2,7 @@ import Home from './routes/Home'
 import Signup from './routes/SignUp'
 import LogIn from './routes/LogIn'
 import ForgotPassword from './routes/ForgotPassword'
+import PublicTasks from './routes/PublicTasks'
 // import Sport from './routes/Sport'
 import MainLayout from './layouts/MainLayout'
 // import LoginLayout from './layouts/LoginLayout'
@@ -15,6 +16,12 @@ const routes = [
     path: '/',
     exact: true,
     main: Home,
+    layout: MainLayout
+  },
+  {
+    path: '/public-tasks',
+    exact: true,
+    main: PublicTasks,
     layout: MainLayout
   },
   // {
