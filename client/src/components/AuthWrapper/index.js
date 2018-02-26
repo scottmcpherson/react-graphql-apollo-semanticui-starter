@@ -71,7 +71,7 @@ class AuthWrapper extends React.Component {
   }
 
   onLogout = () => {
-    this.setState({ user: null })
+    this.setState({ currentUser: null })
     this.props.client.resetStore()
     localStorage.removeItem('token')
     this.props.history.push('/login')
