@@ -3,9 +3,12 @@
     "username": "root",
     "password": "root",
     "database": "graphql_starter_development",
-    "host": "localhost",
+    "host": "127.0.0.1",
     "dialect": "mysql",
-    "port": "8889"
+    "port": "8889",
+    "dialectOptions": {
+      "socketPath": "/Applications/MAMP/tmp/mysql/mysql.sock"
+    }
   },
   "test": {
     "username": "root",
