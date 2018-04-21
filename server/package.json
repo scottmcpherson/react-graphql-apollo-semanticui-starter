@@ -26,10 +26,12 @@
     "nodemon": "1.15.1"
   },
   "babel": {
-    "presets": ["env"]
+    "presets": [
+      "env"
+    ]
   },
   "scripts": {
-    "start": "nodemon ./server.js --exec babel-node"
+    "start": "PORT=3001 nodemon ./server.js --exec babel-node"
   },
   "repository": {
     "type": "git",
