@@ -23,6 +23,7 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.6.1",
+    "cross-env": "5.2.0",
     "nodemon": "1.15.1"
   },
   "babel": {
@@ -31,7 +32,7 @@
     ]
   },
   "scripts": {
-    "start": "PORT=3001 nodemon ./server.js --exec babel-node"
+    "start": "cross-env PORT=3001 nodemon ./server.js --exec babel-node"
   },
   "repository": {
     "type": "git",
