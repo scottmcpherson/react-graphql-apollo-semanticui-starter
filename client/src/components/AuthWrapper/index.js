@@ -30,8 +30,8 @@ class AuthWrapper extends React.Component {
           }
         )
       })
-      .catch(e => {
-        console.log('e:: ', e.graphQLErrors)
+      .catch(err => {
+        console.log('err:: ', err.graphQLErrors)
       })
   }
 

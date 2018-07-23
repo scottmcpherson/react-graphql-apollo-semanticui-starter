@@ -7,9 +7,7 @@ import PrivateTasks from './routes/PrivateTasks'
 import MainLayout from './layouts/MainLayout'
 
 // Each logical "route" has two components, one for
-// the sidebar and one for the main area. We want to
-// render both of them in different places when the
-// path matches the current URL.
+// the layout and one for the main area. We want to
 const routes = [
   {
     path: '/',

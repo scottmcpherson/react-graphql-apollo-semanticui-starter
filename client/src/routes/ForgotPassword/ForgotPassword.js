@@ -81,6 +81,6 @@ const ForgotPasswordForm = ({ handleSubmit, pristine, submitting }) => {
 }
 
 export default reduxForm({
-  form: 'ForgotPassword', // a unique identifier for this form
+  form: 'ForgotPassword',
   validate
 })(ForgotPasswordForm)

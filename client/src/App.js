@@ -25,7 +25,8 @@ const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
   const token = localStorage.getItem('token')
 
-  // return the headers to the context so httpLink can read them
+  // Return the headers to the context so httpLink
+  // can read them and include the jwt token
   return {
     headers: {
       ...headers,
@@ -41,7 +42,7 @@ const client = new ApolloClient({
 
 const store = createStore(reducers, applyMiddleware(thunk))
 
-const Routes = props => {
+const Routes = () => {
   return (
     <Router history={history}>
       <ScrollToTop>

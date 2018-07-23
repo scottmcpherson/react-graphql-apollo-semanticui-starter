@@ -87,6 +87,6 @@ const LogInForm = ({ handleSubmit, pristine, submitting }) => {
 }
 
 export default reduxForm({
-  form: 'Login', // a unique identifier for this form
+  form: 'Login',
   validate
 })(LogInForm)
