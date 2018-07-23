@@ -5,8 +5,8 @@ import TasksList from './components/TasksList'
 const PublicTasksContainer = () => {
   return (
     <div>
-      <AddTask />
       <TasksList />
+      <AddTask />
     </div>
   )
 }
