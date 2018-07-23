@@ -4,3 +4,7 @@ Getting started
 2.  Run `yarn` or `npm i` inside the server and client folders
 3.  In the server folder, create a file called .env and copy/paster the contents from .env.example to .env
 4.  Run `yarn start` or `npm start` from the client and server folders
+
+TODO
+
+- [ ] Need to refactor client to use the latest apollo client API with `<Mutation></Mutation>` and <`Query></Query>`
