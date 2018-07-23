@@ -50,8 +50,8 @@ class AuthWrapper extends React.Component {
           }
         )
       })
-      .catch(e => {
-        console.log('e:: ', e.graphQLErrors)
+      .catch(err => {
+        console.log('err:: ', err.graphQLErrors)
       })
   }
 
@@ -65,8 +65,8 @@ class AuthWrapper extends React.Component {
           isFormSubmitting: false
         })
       })
-      .catch(e => {
-        console.log('e:: ', e.graphQLErrors)
+      .catch(err => {
+        console.log('err:: ', err.graphQLErrors)
       })
   }
 
