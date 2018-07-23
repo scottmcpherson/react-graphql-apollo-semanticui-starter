@@ -40,7 +40,7 @@ const resolvers = {
         throw new Error('Password is incorrect')
       }
 
-      user.jwt = jwt.sign({ id: user.id }, 'SECRET')
+      user.jwt = jwt.sign({ id: user.id }, process.env.JWT_SECRET)
 
       return user
     },
@@ -57,7 +57,7 @@ const resolvers = {
         password: hash
       })
 
-      user.jwt = jwt.sign({ id: user.id }, 'SECRET')
+      user.jwt = jwt.sign({ id: user.id }, process.env.JWT_SECRET)
 
       return user
     },

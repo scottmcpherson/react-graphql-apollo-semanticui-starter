@@ -3,7 +3,6 @@ import { graphqlExpress, graphiqlExpress } from 'apollo-server-express'
 import bodyParser from 'body-parser'
 import schema from './data/schema'
 import models from './models'
-import { setupLocalLogin } from './localLogin'
 import jwt from 'express-jwt'
 import cors from 'cors'
 
@@ -19,7 +18,7 @@ app.use(
   '/graphql',
   bodyParser.json(),
   jwt({
-    secret: 'SECRET',
+    secret: process.env.JWT_SECRET,
     credentialsRequired: false
   }),
   graphqlExpress(async req => ({

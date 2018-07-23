@@ -105,8 +105,7 @@ module.exports = function(passport) {
   // Setup options for JWT Strategy
   const jwtOptions = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme('jwt'),
-    //secretOrKey: config.secret
-    secretOrKey: process.env.SECRET
+    secretOrKey: process.env.JWT_SECRET
   }
 
   // Create JWT Strategy
