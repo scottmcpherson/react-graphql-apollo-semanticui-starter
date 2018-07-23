@@ -31,7 +31,7 @@ const renderTextField = ({ input, meta: { touched, error }, ...custom }) => (
   />
 )
 
-const SignUpForm = ({ handleSubmit, pristine, submitting }) => {
+const SignUpForm = ({ handleSubmit, pristine, submitting, error }) => {
   return (
     <div>
       {/*
