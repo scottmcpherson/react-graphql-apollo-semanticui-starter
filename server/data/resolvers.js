@@ -1,7 +1,7 @@
-const fetch = require('node-fetch')
 const db = require('../models')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const { AuthenticationError } = require('apollo-server-express')
 const User = db.User
 const Task = db.Task
 
@@ -9,7 +9,7 @@ const resolvers = {
   Query: {
     currentUser: async (root, {}, { user }) => {
       if (!user) {
-        throw new Error('Invalid token')
+        throw new AuthenticationError('Invalid token')
       }
       const loginInUser = await User.findOne({ where: { id: user.id } })
       return loginInUser
@@ -22,7 +22,7 @@ const resolvers = {
     },
     privateTasks: async (root, {}, { user }) => {
       if (!user) {
-        throw new Error('Invalid token')
+        throw new AuthenticationError('Invalid token')
       }
       return await Task.findAll({ where: { UserId: user.id, isPublic: false } })
     }
@@ -63,7 +63,7 @@ const resolvers = {
     },
     forgotPassword: async (root, { email }, { user }) => {
       if (!user) {
-        throw new Error('Invalid token')
+        throw new AuthenticationError('Invalid token')
       }
 
       console.log(`Forgot password email here for ${email}`)
@@ -72,7 +72,7 @@ const resolvers = {
     },
     resetPassword: async (root, { password, token }, { user }) => {
       if (!user) {
-        throw new Error('Invalid token')
+        throw new AuthenticationError('Invalid token')
       }
 
       console.log(`Reset password here`)
@@ -88,7 +88,7 @@ const resolvers = {
     },
     addPrivateTask: async (root, { title }, { user }) => {
       if (!user) {
-        throw new Error('Invalid token')
+        throw new AuthenticationError('Invalid token')
       }
       return await Task.create({
         title,

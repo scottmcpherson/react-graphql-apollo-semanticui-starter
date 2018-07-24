@@ -5,8 +5,6 @@ import mocks from './mocks'
 const typeDefs = `
 type Query {
   currentUser: User
-  sports(limit: Int): [Sport]
-  sportMatches(sportName: String): [Match]
   publicTasks: [Task]
   privateTasks: [Task]
 }
@@ -18,19 +16,6 @@ type User {
   email: String
   password: String
   jwt: String
-}
-
-type Sport {
-  id: Int
-  name: String
-  matches: [Match]
-}
-
-type Match {
-  id: String
-  homeTeam: String
-  awayTeam: String
-  sport: Sport
 }
 
 type Message {

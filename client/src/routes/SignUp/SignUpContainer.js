@@ -18,12 +18,19 @@ class SignupContainer extends Component {
     const { onAuthenticateUser } = this.props
     return (
       <Mutation
+        errorPolicy="all"
         mutation={SIGNUP_MUTATION}
         onCompleted={({ signup }) => {
           onAuthenticateUser(signup)
         }}
       >
         {(signup, { data, error }) => {
+          if (Array.isArray(error) && error.length) {
+            error.graphQLErrors.forEach(err => {
+              console.log('err:: ', err)
+            })
+          }
+          console.log('error:: ', error)
           return (
             <SignUp
               onSubmit={({ email, password }) => {
