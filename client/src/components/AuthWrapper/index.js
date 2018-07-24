@@ -15,9 +15,9 @@ class AuthWrapper extends React.Component {
   state = {
     currentUser: null
   }
+
   onAuthenticateUser = currentUser => {
     localStorage.setItem('token', currentUser.jwt)
-    console.log('currentUser:: ', currentUser)
     this.setState({ currentUser }, () => {
       this.props.history.push('/')
     })
