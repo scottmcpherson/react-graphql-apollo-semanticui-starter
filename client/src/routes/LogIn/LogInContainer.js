@@ -23,13 +23,17 @@ class LogInContainer extends Component {
           onAuthenticateUser(login)
         }}
       >
-        {login => (
-          <LogIn
-            onSubmit={({ email, password }) => {
-              login({ variables: { email, password } })
-            }}
-          />
-        )}
+        {(login, { error }) => {
+          const formErrors = error && error.graphQLErrors
+          return (
+            <LogIn
+              formErrors={formErrors}
+              onSubmit={({ email, password }) => {
+                login({ variables: { email, password } })
+              }}
+            />
+          )
+        }}
       </Mutation>
     )
   }

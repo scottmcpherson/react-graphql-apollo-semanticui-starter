@@ -2,6 +2,7 @@ import React from 'react'
 import { Button, Form, Grid, Header, Message, Segment } from 'semantic-ui-react'
 import { Field, reduxForm } from 'redux-form'
 import { Link } from 'react-router-dom'
+import FormMessageErrors from '../../components/FormMessageErrors'
 
 const validate = values => {
   const errors = {}
@@ -31,7 +32,8 @@ const renderTextField = ({ input, meta: { touched, error }, ...custom }) => (
   />
 )
 
-const LogInForm = ({ handleSubmit, pristine, submitting }) => {
+const LogInForm = ({ handleSubmit, pristine, submitting, formErrors }) => {
+  const isFormErrors = !!(Array.isArray(formErrors) && formErrors.length)
   return (
     <div>
       {/*
@@ -55,8 +57,9 @@ const LogInForm = ({ handleSubmit, pristine, submitting }) => {
           <Header as="h2" color="teal" textAlign="center">
             Log in to your account
           </Header>
-          <Form size="large" onSubmit={handleSubmit}>
+          <Form size="large" onSubmit={handleSubmit} error={isFormErrors}>
             <Segment stacked>
+              <FormMessageErrors errors={formErrors} />
               <Field name="email" label="Email" component={renderTextField} />
               <Field
                 name="password"

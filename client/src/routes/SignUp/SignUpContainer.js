@@ -24,15 +24,11 @@ class SignupContainer extends Component {
           onAuthenticateUser(signup)
         }}
       >
-        {(signup, { data, error }) => {
-          if (Array.isArray(error) && error.length) {
-            error.graphQLErrors.forEach(err => {
-              console.log('err:: ', err)
-            })
-          }
-          console.log('error:: ', error)
+        {(signup, { error }) => {
+          const formErrors = error && error.graphQLErrors
           return (
             <SignUp
+              formErrors={formErrors}
               onSubmit={({ email, password }) => {
                 signup({ variables: { email, password } })
               }}
