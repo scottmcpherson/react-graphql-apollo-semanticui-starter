@@ -1,7 +1,3 @@
-import { makeExecutableSchema, addMockFunctionsToSchema } from 'graphql-tools'
-import resolvers from './resolvers'
-import mocks from './mocks'
-
 const typeDefs = `
 type Query {
   currentUser: User
@@ -44,8 +40,4 @@ type Mutation {
 }
 `
 
-const schema = makeExecutableSchema({ typeDefs, resolvers })
-
-// addMockFunctionsToSchema({ schema, mocks })
-
-export default schema
+export default typeDefs

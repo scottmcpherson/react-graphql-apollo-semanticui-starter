@@ -17,7 +17,7 @@ class AuthWrapper extends React.Component {
   }
   onAuthenticateUser = currentUser => {
     localStorage.setItem('token', currentUser.jwt)
-
+    console.log('currentUser:: ', currentUser)
     this.setState({ currentUser }, () => {
       this.props.history.push('/')
     })
@@ -34,7 +34,7 @@ class AuthWrapper extends React.Component {
     const { data } = this.props
     const existingCurrentUser = this.state.currentUser
     const currentUser = data && data.currentUser
-    if (existingCurrentUser !== currentUser) {
+    if (currentUser && existingCurrentUser !== currentUser) {
       this.setState({ currentUser })
     }
   }
