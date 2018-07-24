@@ -1,4 +1,4 @@
-<h1 align="center"><strong>React, SemanticUI, Apollo Client, and GraphQL Starter With Authentication</strong></h1>
+<h1 align="center" style="font-size: 1.7em;"><strong>React, SemanticUI, Apollo Client, and GraphQL Starter With Authentication</strong></h1>
 
 Getting started
 
