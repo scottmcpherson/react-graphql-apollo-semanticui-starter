@@ -1,5 +1,6 @@
 import React from 'react'
-import { Button, Form, Grid, Header, Message, Segment } from 'semantic-ui-react'
+import { Button, Form, Message, Segment } from 'semantic-ui-react'
+import AuthFormContainer from '../../components/AuthFormContainer'
 import { Field, reduxForm } from 'redux-form'
 import { Link } from 'react-router-dom'
 
@@ -33,50 +34,27 @@ const renderTextField = ({ input, meta: { touched, error }, ...custom }) => (
 
 const ForgotPasswordForm = ({ handleSubmit, pristine, submitting }) => {
   return (
-    <div>
-      {/*
-      Heads up! The styles below are necessary for the correct render of this example.
-      You can do same with CSS, the main idea is that all the elements up to the `Grid`
-      below must have a height of 100%.
-    */}
-      <style>{`
-      body > div,
-      body > div > div,
-      body > div > div > div.login-form {
-        height: 100%;
-      }
-    `}</style>
-      <Grid
-        textAlign="center"
-        style={{ height: '100%' }}
-        verticalAlign="middle"
-      >
-        <Grid.Column style={{ maxWidth: 450 }}>
-          <Header as="h2" color="teal" textAlign="center">
-            Reset password
-          </Header>
-          <Form size="large" onSubmit={handleSubmit}>
-            <Segment stacked>
-              <Field name="email" label="Email" component={renderTextField} />
+    <AuthFormContainer header="Reset password">
+      <Form size="large" onSubmit={handleSubmit}>
+        <Segment>
+          <Field name="email" label="Email" component={renderTextField} />
 
-              <Button
-                color="teal"
-                fluid
-                size="large"
-                disabled={pristine || submitting}
-              >
-                Send Reset Link
-              </Button>
-            </Segment>
-          </Form>
-          <Message>
-            <Link to="/login" style={{ marginTop: '10px' }}>
-              Back to Log In
-            </Link>
-          </Message>
-        </Grid.Column>
-      </Grid>
-    </div>
+          <Button
+            color="teal"
+            fluid
+            size="large"
+            disabled={pristine || submitting}
+          >
+            Send Reset Link
+          </Button>
+        </Segment>
+      </Form>
+      <Message>
+        <Link to="/login" style={{ marginTop: '10px' }}>
+          Back to Log In
+        </Link>
+      </Message>
+    </AuthFormContainer>
   )
 }
 

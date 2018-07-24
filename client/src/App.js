@@ -3,10 +3,11 @@ import { Router } from 'react-router-dom'
 import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import { ApolloProvider } from 'react-apollo'
-import { ApolloClient } from 'apollo-client'
-import { createHttpLink } from 'apollo-link-http'
+import { ApolloClient } from 'apollo-boost'
+import { ApolloLink, from } from 'apollo-link'
+import { HttpLink } from 'apollo-link-http'
+import { onError } from 'apollo-link-error'
 import { InMemoryCache } from 'apollo-cache-inmemory'
-import { setContext } from 'apollo-link-context'
 import thunk from 'redux-thunk'
 import routes from './routes'
 import reducers from './redux'
@@ -17,26 +18,31 @@ import 'semantic-ui-css/semantic.min.css'
 
 const GRAPHQL_URI = 'http://localhost:3001/graphql'
 
-const httpLink = createHttpLink({
+const httpLink = new HttpLink({
   uri: GRAPHQL_URI
 })
 
-const authLink = setContext((_, { headers }) => {
-  // get the authentication token from local storage if it exists
+const authMiddleware = new ApolloLink((operation, forward) => {
+  // add the authorization to the headers
   const token = localStorage.getItem('token')
 
-  // Return the headers to the context so httpLink
-  // can read them and include the jwt token
-  return {
+  operation.setContext(({ headers = {} }) => ({
     headers: {
       ...headers,
       authorization: token ? `Bearer ${token}` : ''
     }
-  }
+  }))
+
+  return forward(operation)
+})
+
+const errorMiddleware = onError(({ graphQLErrors, networkError }) => {
+  // TODO: Implement logout pattern here and handle global errors
+  // if (networkError.statusCode === 401) logout();
 })
 
 const client = new ApolloClient({
-  link: authLink.concat(httpLink),
+  link: from([authMiddleware, errorMiddleware, httpLink]),
   cache: new InMemoryCache()
 })
 
