@@ -8,3 +8,4 @@ Getting started
 TODO
 
 - [ ] Need to refactor client to use the latest apollo client API with `<Mutation></Mutation>` and <`Query></Query>`
+- [ ] Handle errors on the client
