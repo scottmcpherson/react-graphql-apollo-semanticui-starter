@@ -1,7 +1,7 @@
 const db = require('../models')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const { AuthenticationError } = require('apollo-server-express')
+const { AuthenticationError, UserInputError } = require('apollo-server-express')
 const User = db.User
 const Task = db.Task
 
@@ -37,7 +37,7 @@ const resolvers = {
       const validPassword = await bcrypt.compare(password, user.password)
 
       if (!validPassword) {
-        throw new Error('Password is incorrect')
+        throw new UserInputError('Password is incorrect')
       }
 
       user.jwt = jwt.sign({ id: user.id }, process.env.JWT_SECRET)
@@ -48,7 +48,7 @@ const resolvers = {
       const existingUser = await User.findOne({ where: { email } })
 
       if (existingUser) {
-        throw new Error('Email already used')
+        throw new UserInputError('Email already used')
       }
       const hash = await bcrypt.hash(password, 10)
 
