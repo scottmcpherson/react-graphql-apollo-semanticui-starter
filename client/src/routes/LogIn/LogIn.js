@@ -58,7 +58,7 @@ const LogInForm = ({ handleSubmit, pristine, submitting, formErrors }) => {
             Log in to your account
           </Header>
           <Form size="large" onSubmit={handleSubmit} error={isFormErrors}>
-            <Segment stacked>
+            <Segment>
               <FormMessageErrors errors={formErrors} />
               <Field name="email" label="Email" component={renderTextField} />
               <Field

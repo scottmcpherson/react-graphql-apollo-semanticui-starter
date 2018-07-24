@@ -58,7 +58,7 @@ const SignUpForm = ({ handleSubmit, pristine, submitting, formErrors }) => {
             Sign up
           </Header>
           <Form size="large" onSubmit={handleSubmit} error={isFormErrors}>
-            <Segment stacked>
+            <Segment>
               <FormMessageErrors errors={formErrors} />
               <Field name="email" label="Email" component={renderTextField} />
               <Field

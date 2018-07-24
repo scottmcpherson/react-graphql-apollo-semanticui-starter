@@ -56,7 +56,7 @@ const ForgotPasswordForm = ({ handleSubmit, pristine, submitting }) => {
             Reset password
           </Header>
           <Form size="large" onSubmit={handleSubmit}>
-            <Segment stacked>
+            <Segment>
               <Field name="email" label="Email" component={renderTextField} />
 
               <Button
