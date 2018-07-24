@@ -1,3 +1,5 @@
+<h1 align="center"><strong>A Full-stack Apollo Client, React, and GraphQL Starter With Authentication</strong></h1>
+
 Getting started
 
 1.  Create a mysql database called starter_development or use a dirrerent name and update `development.database` in `server/config/config.json` to reflect the new name
@@ -7,5 +9,5 @@ Getting started
 
 TODO
 
-- [ ] Need to refactor client to use the latest apollo client API with `<Mutation></Mutation>` and <`Query></Query>`
-- [ ] Handle errors on the client
+- [x] Need to refactor client to use the latest apollo client API with `<Mutation></Mutation>` and <`Query></Query>`
+- [x] Handle errors on the client
