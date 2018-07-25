@@ -11,3 +11,4 @@ TODO
 
 - [x] Need to refactor client to use the latest apollo client API with `<Mutation></Mutation>` and <`Query></Query>`
 - [x] Handle errors on the client
+- [ ] Use optimistic creates to improve the responsiveness of the UI when creating a task
