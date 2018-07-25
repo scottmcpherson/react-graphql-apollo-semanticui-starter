@@ -2,12 +2,13 @@ import Home from './routes/Home'
 import Signup from './routes/SignUp'
 import LogIn from './routes/LogIn'
 import ForgotPassword from './routes/ForgotPassword'
-import PublicTasks from './routes/PublicTasks'
-import PrivateTasks from './routes/PrivateTasks'
+import Tasks from './routes/Tasks'
 import MainLayout from './layouts/MainLayout'
 
 // Each logical "route" has two components, one for
-// the layout and one for the main area. We want to
+// the layout and one for the main area we want to render
+// We can also mark a route as checkAuth: true to redirect
+// to the login page if not authenticated
 const routes = [
   {
     path: '/',
@@ -18,13 +19,13 @@ const routes = [
   {
     path: '/public-tasks',
     exact: true,
-    main: PublicTasks,
+    main: Tasks,
     layout: MainLayout
   },
   {
     path: '/private-tasks',
     exact: true,
-    main: PrivateTasks,
+    main: Tasks,
     layout: MainLayout,
     checkAuth: true
   },

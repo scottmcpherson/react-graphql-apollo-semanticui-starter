@@ -1,43 +1,22 @@
 import React from 'react'
 import { Button, Form, Message, Segment } from 'semantic-ui-react'
 import AuthFormContainer from '../../components/AuthFormContainer'
+import TextField from '../../components/TextField'
 import { Field, reduxForm } from 'redux-form'
 import { Link } from 'react-router-dom'
-
-const validate = values => {
-  const errors = {}
-  const requiredFields = ['username', 'email', 'password']
-  requiredFields.forEach(field => {
-    if (!values[field]) {
-      errors[field] = 'Required'
-    }
-  })
-  if (
-    values.email &&
-    !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
-  ) {
-    errors.email = 'Invalid email address'
-  }
-  return errors
-}
-
-const renderTextField = ({ input, meta: { touched, error }, ...custom }) => (
-  <Form.Input
-    required
-    fluid
-    margin="normal"
-    error={touched && !!error}
-    {...input}
-    {...custom}
-  />
-)
+import { required } from '../../utils/validations'
 
 const ForgotPasswordForm = ({ handleSubmit, pristine, submitting }) => {
   return (
     <AuthFormContainer header="Reset password">
       <Form size="large" onSubmit={handleSubmit}>
         <Segment>
-          <Field name="email" label="Email" component={renderTextField} />
+          <Field
+            name="email"
+            label="Email"
+            component={TextField}
+            validate={[required]}
+          />
 
           <Button
             color="teal"
@@ -58,7 +37,4 @@ const ForgotPasswordForm = ({ handleSubmit, pristine, submitting }) => {
   )
 }
 
-export default reduxForm({
-  form: 'ForgotPassword',
-  validate
-})(ForgotPasswordForm)
+export default reduxForm({ form: 'ForgotPassword' })(ForgotPasswordForm)

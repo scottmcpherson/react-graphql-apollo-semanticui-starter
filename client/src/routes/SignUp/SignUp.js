@@ -2,36 +2,10 @@ import React from 'react'
 import { Button, Form, Message, Segment } from 'semantic-ui-react'
 import { Field, reduxForm } from 'redux-form'
 import { Link } from 'react-router-dom'
+import TextField from '../../components/TextField'
 import FormMessageErrors from '../../components/FormMessageErrors'
 import AuthFormContainer from '../../components/AuthFormContainer'
-
-const validate = values => {
-  const errors = {}
-  const requiredFields = ['username', 'email', 'password']
-  requiredFields.forEach(field => {
-    if (!values[field]) {
-      errors[field] = 'Required'
-    }
-  })
-  if (
-    values.email &&
-    !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
-  ) {
-    errors.email = 'Invalid email address'
-  }
-  return errors
-}
-
-const renderTextField = ({ input, meta: { touched, error }, ...custom }) => (
-  <Form.Input
-    required
-    fluid
-    margin="normal"
-    error={touched && !!error}
-    {...input}
-    {...custom}
-  />
-)
+import { required, email } from '../../utils/validations'
 
 const SignUpForm = ({ handleSubmit, pristine, submitting, formErrors }) => {
   const isFormErrors = !!(Array.isArray(formErrors) && formErrors.length)
@@ -40,8 +14,19 @@ const SignUpForm = ({ handleSubmit, pristine, submitting, formErrors }) => {
       <Form size="large" onSubmit={handleSubmit} error={isFormErrors}>
         <Segment>
           <FormMessageErrors errors={formErrors} />
-          <Field name="email" label="Email" component={renderTextField} />
-          <Field name="password" label="Password" component={renderTextField} />
+          <Field
+            name="email"
+            label="Email"
+            component={TextField}
+            validate={[required, email]}
+          />
+          <Field
+            type="password"
+            name="password"
+            label="Password"
+            validate={[required]}
+            component={TextField}
+          />
 
           <Button
             color="teal"
@@ -63,7 +48,4 @@ const SignUpForm = ({ handleSubmit, pristine, submitting, formErrors }) => {
   )
 }
 
-export default reduxForm({
-  form: 'SignUp',
-  validate
-})(SignUpForm)
+export default reduxForm({ form: 'SignUp' })(SignUpForm)
