@@ -25,7 +25,8 @@ const routes = [
     path: '/private-tasks',
     exact: true,
     main: PrivateTasks,
-    layout: MainLayout
+    layout: MainLayout,
+    checkAuth: true
   },
   {
     path: '/signup',

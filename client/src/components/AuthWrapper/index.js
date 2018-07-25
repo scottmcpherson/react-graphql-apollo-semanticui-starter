@@ -1,6 +1,7 @@
 import React from 'react'
 import gql from 'graphql-tag'
 import { graphql, compose } from 'react-apollo'
+import { Query } from 'react-apollo'
 
 const CURRENT_USER_QUERY = gql`
   query CurrentUser {
@@ -16,11 +17,16 @@ class AuthWrapper extends React.Component {
     currentUser: null
   }
 
-  onAuthenticateUser = currentUser => {
-    localStorage.setItem('token', currentUser.jwt)
-    this.setState({ currentUser }, () => {
-      this.props.history.push('/')
+  onAuthenticateUser = ({ jwt, ...data }) => {
+    localStorage.setItem('token', jwt)
+
+    this.props.client.cache.writeQuery({
+      query: CURRENT_USER_QUERY,
+      data: {
+        currentUser: data
+      }
     })
+    this.props.history.push('/')
   }
 
   onLogout = () => {
@@ -39,13 +45,16 @@ class AuthWrapper extends React.Component {
     }
   }
 
-  renderChildren() {
-    const {
-      children,
-      data: { loading }
-    } = this.props
-    const { currentUser } = this.state
+  renderChildren(loading, data, error) {
+    const { children } = this.props
+    const currentUser = data && data.currentUser
     const { onAuthenticateUser, onLogout } = this
+
+    console.log('data:: ', data)
+    // console.log(
+    //   'renderChildren this.props.client.cache:: ',
+    //   this.props.client.cache
+    // )
 
     return React.Children.map(children, child =>
       React.cloneElement(child, {
@@ -58,7 +67,13 @@ class AuthWrapper extends React.Component {
   }
 
   render() {
-    return this.renderChildren()
+    return (
+      <Query query={CURRENT_USER_QUERY} fetchPolicy="cache-and-network">
+        {({ loading, data, error }) =>
+          this.renderChildren(loading, data, error)
+        }
+      </Query>
+    )
   }
 }
 
