@@ -19,3 +19,4 @@ TODO
 - [ ] Handle global client errors
 - [ ] Integrate Travis CI for automated tests
 - [ ] Setup reset password and forgot password (with the exception of emails)
+- [ ] Add more test coverage
