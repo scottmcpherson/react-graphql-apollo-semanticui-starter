@@ -1,7 +1,8 @@
 import React from 'react'
 import { Container } from 'semantic-ui-react'
-import { Route } from 'react-router-dom'
+import { Route, Redirect } from 'react-router-dom'
 import TobBar from '../../components/TopBar'
+import Loader from '../../components/Loader'
 
 const MainLayout = ({
   client,
@@ -9,6 +10,7 @@ const MainLayout = ({
   currentUser,
   isFetchingUser,
   onLogout,
+  checkAuth,
   ...rest
 }) => {
   return (
@@ -23,7 +25,18 @@ const MainLayout = ({
           />
 
           <Container text style={{ marginTop: '7em' }}>
-            <Component {...matchProps} {...rest} />
+            {checkAuth &&
+              !isFetchingUser &&
+              !currentUser && (
+                <Redirect
+                  to={{
+                    pathname: '/login',
+                    state: { from: matchProps.location }
+                  }}
+                />
+              )}
+            {isFetchingUser && <Loader />}
+            {!isFetchingUser && <Component {...matchProps} {...rest} />}
           </Container>
         </div>
       )}

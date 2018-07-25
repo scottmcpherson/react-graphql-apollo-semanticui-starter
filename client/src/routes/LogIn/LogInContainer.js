@@ -20,12 +20,7 @@ class LogInContainer extends Component {
       <Mutation
         mutation={LOGIN_MUTATION}
         onCompleted={({ login }) => {
-          localStorage.setItem('token', login.jwt)
           onAuthenticateUser(login)
-        }}
-        refetchQueries={() => {
-          console.log('================refetchQueries====================')
-          return ['currentUser']
         }}
       >
         {(login, { error }) => {

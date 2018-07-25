@@ -64,6 +64,7 @@ const Routes = () => {
                     path={route.path}
                     exact={route.exact}
                     component={route.main}
+                    checkAuth={route.checkAuth}
                   />
                 )
               })}
