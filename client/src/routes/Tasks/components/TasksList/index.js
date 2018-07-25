@@ -26,14 +26,15 @@ export const PRIVATE_TASKS_QUERY = gql`
 const TasksList = ({ isPrivateTasks }) => {
   const query = isPrivateTasks ? PRIVATE_TASKS_QUERY : PUBLIC_TASKS_QUERY
   return (
-    <Query query={query} fetchPolicy="cache-and-network">
-      {({ data, loading }) => {
+    <Query query={query} pollInterval={3000} fetchPolicy="cache-and-network">
+      {({ data, loading, networkStatus }) => {
+        const isInitialLoad = networkStatus === 1
         const tasks = isPrivateTasks
           ? data && data.privateTasks
           : data && data.publicTasks
         const isTasks = !!(Array.isArray(tasks) && tasks.length)
 
-        if (loading) return <Loader />
+        if (loading && isInitialLoad) return <Loader />
         if (!isTasks) return null
 
         return (
