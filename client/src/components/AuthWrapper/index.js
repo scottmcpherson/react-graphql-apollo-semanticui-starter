@@ -13,10 +13,6 @@ const CURRENT_USER_QUERY = gql`
 `
 
 class AuthWrapper extends React.Component {
-  state = {
-    currentUser: null
-  }
-
   onAuthenticateUser = ({ jwt, ...data }) => {
     localStorage.setItem('token', jwt)
 
@@ -30,31 +26,15 @@ class AuthWrapper extends React.Component {
   }
 
   onLogout = () => {
-    this.setState({ currentUser: null })
     this.props.client.resetStore()
     localStorage.removeItem('token')
     this.props.history.push('/login')
-  }
-
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    const { data } = this.props
-    const existingCurrentUser = this.state.currentUser
-    const currentUser = data && data.currentUser
-    if (currentUser && existingCurrentUser !== currentUser) {
-      this.setState({ currentUser })
-    }
   }
 
   renderChildren(loading, data, error) {
     const { children } = this.props
     const currentUser = data && data.currentUser
     const { onAuthenticateUser, onLogout } = this
-
-    console.log('data:: ', data)
-    // console.log(
-    //   'renderChildren this.props.client.cache:: ',
-    //   this.props.client.cache
-    // )
 
     return React.Children.map(children, child =>
       React.cloneElement(child, {
