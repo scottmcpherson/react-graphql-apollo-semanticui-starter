@@ -74,6 +74,7 @@ type ForgotPasswordPayload {
 
 input ResetPasswordInput {
   token: String!
+  password: String!
 }
 
 type ResetPasswordPayload {

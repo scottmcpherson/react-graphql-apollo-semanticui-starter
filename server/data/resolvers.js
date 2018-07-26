@@ -2,6 +2,7 @@ const db = require('../models')
 const bcrypt = require('bcrypt')
 const crypto = require('crypto')
 const jsonWebToken = require('jsonwebtoken')
+const moment = require('moment')
 const { AuthenticationError, UserInputError } = require('apollo-server-express')
 const User = db.user
 const Task = db.task
@@ -98,10 +99,15 @@ const resolvers = {
       return { message: 'Success! Check your server logs for a test link' }
     },
 
-    resetPassword: async (root, { input: { password, token } }) => {
+    resetPassword: async (root, { input: { token, password } }) => {
       const user = await User.findOne({ where: { token } })
       if (!user) throw new UserInputError('Invalid token')
       const hash = await bcrypt.hash(password, 10)
+      const now = moment()
+      const tokenExpiration = moment(user.tokenExpiration)
+
+      if (now.isAfter(tokenExpiration))
+        throw new UserInputError('Token is expired')
 
       await user.update({
         password: hash,

@@ -7,21 +7,21 @@ import { Field, reduxForm } from 'redux-form'
 import { Link } from 'react-router-dom'
 import { required } from '../../utils/validations'
 
-const ForgotPasswordForm = ({
+const ResetPasswordForm = ({
   pristine,
   submitting,
   formErrors,
   handleSubmit
 }) => {
-  const isFormErrors = !!(Array.isArray(formErrors) && formErrors.length)
+  const areFormErrors = !!(Array.isArray(formErrors) && formErrors.length)
   return (
-    <AuthFormContainer header="Reset password">
-      <Form size="large" onSubmit={handleSubmit} error={isFormErrors}>
+    <AuthFormContainer header="Create new password">
+      <Form size="large" onSubmit={handleSubmit} error={areFormErrors}>
         <Segment>
           <FormMessage color="red" messages={formErrors} />
           <Field
-            name="email"
-            label="Email"
+            name="password"
+            label="New Password"
             component={TextField}
             validate={[required]}
           />
@@ -32,7 +32,7 @@ const ForgotPasswordForm = ({
             size="large"
             disabled={pristine || submitting}
           >
-            Send Reset Link
+            Reset Password
           </Button>
         </Segment>
       </Form>
@@ -45,4 +45,4 @@ const ForgotPasswordForm = ({
   )
 }
 
-export default reduxForm({ form: 'ForgotPassword' })(ForgotPasswordForm)
+export default reduxForm({ form: 'ResetPassword' })(ResetPasswordForm)

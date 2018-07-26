@@ -26,9 +26,7 @@ class ForgotPasswordContainer extends Component {
             <ForgotPassword
               formErrors={formErrors}
               onSubmit={({ email }) => {
-                forgotPassword({ variables: { input: { email } } }).then(
-                  () => {}
-                )
+                forgotPassword({ variables: { input: { email } } })
               }}
             />
           )
