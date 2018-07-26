@@ -7,7 +7,7 @@ import { PUBLIC_TASKS_QUERY, PRIVATE_TASKS_QUERY } from '../TasksList'
 const DELETE_TASK_MUTATION = gql`
   mutation deleteTask($id: ID!) {
     deleteTask(id: $id) {
-      status
+      message
     }
   }
 `

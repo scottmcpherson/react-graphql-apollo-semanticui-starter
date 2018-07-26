@@ -6,7 +6,7 @@ type Query {
 }
 
 type User {
-  id: Int
+  id: ID
   firstName: String
   lastName: String
   email: String
@@ -15,10 +15,6 @@ type User {
 
 type Message {
   message: String 
-}
-
-type Status {
-  status: String 
 }
 
 type Task {
@@ -97,7 +93,7 @@ type Mutation {
   verifyEmail(input: VerifyEmailInput!): VerifyEmailPayload
   createPublicTask(input: CreatePublicTaskInput!): CreateTaskPublicPayload
   createPrivateTask(input: CreatePrivateTaskInput!): CreateTaskPrivatePayload
-  deleteTask(id: ID!): Status
+  deleteTask(id: ID!): Message
 }
 `
 
