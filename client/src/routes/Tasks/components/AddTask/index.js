@@ -10,10 +10,8 @@ import { Mutation } from 'react-apollo'
 const CREATE_PRIVATE_TASK_MUTATION = gql`
   mutation createPrivateTask($input: CreatePrivateTaskInput!) {
     createPrivateTask(input: $input) {
-      task {
-        id
-        title
-      }
+      id
+      title
     }
   }
 `
@@ -21,10 +19,8 @@ const CREATE_PRIVATE_TASK_MUTATION = gql`
 const CREATE_PUBLIC_TASK_MUTATION = gql`
   mutation createPublicTask($input: CreatePublicTaskInput!) {
     createPublicTask(input: $input) {
-      task {
-        id
-        title
-      }
+      id
+      title
     }
   }
 `

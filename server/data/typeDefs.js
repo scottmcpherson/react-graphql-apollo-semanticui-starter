@@ -28,16 +28,13 @@ input CreatePublicTaskInput {
   title: String!
 }
 
-type CreateTaskPublicPayload {
-  task: Task
-}
-
 input CreatePrivateTaskInput {
   title: String!
 }
 
-type CreateTaskPrivatePayload {
-  task: Task
+type AuthPayload {
+  user: User
+  jwt: String
 }
 
 input LoginInput {
@@ -45,19 +42,9 @@ input LoginInput {
   password: String!
 }
 
-type LoginPayload {
-  user: User
-  jwt: String
-}
-
 input SignupInput {
   email: String!, 
   password: String!
-}
-
-type SignupPayload {
-  user: User
-  jwt: String
 }
 
 input ForgotPasswordInput {
@@ -86,13 +73,13 @@ type VerifyEmailPayload {
 }
 
 type Mutation {
-  login(input: LoginInput!): LoginPayload
-  signup(input: SignupInput!): SignupPayload
+  login(input: LoginInput!): AuthPayload
+  signup(input: SignupInput!): AuthPayload
   forgotPassword(input: ForgotPasswordInput!): ForgotPasswordPayload
   resetPassword(input: ResetPasswordInput!): ResetPasswordPayload
   verifyEmail(input: VerifyEmailInput!): VerifyEmailPayload
-  createPublicTask(input: CreatePublicTaskInput!): CreateTaskPublicPayload
-  createPrivateTask(input: CreatePrivateTaskInput!): CreateTaskPrivatePayload
+  createPublicTask(input: CreatePublicTaskInput!): Task
+  createPrivateTask(input: CreatePrivateTaskInput!): Task
   deleteTask(id: ID!): Message
 }
 `
