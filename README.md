@@ -15,8 +15,7 @@ TODO
 
 - [x] Need to refactor client to use the latest apollo client API with `<Mutation></Mutation>` and <`Query></Query>`
 - [x] Handle component errors on the client
-- [ ] Use optimistic creates to improve the responsiveness of the UI when creating a task
-- [ ] Handle global client errors
+- [ ] Use optimistic creates to improve the responsiveness of the UI when creating a public task
 - [ ] Integrate Travis CI for automated tests
-- [ ] Setup reset password and forgot password (with the exception of emails)
+- [x] Setup reset password and forgot password (with the exception of emails)
 - [ ] Add more test coverage
