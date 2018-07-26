@@ -1,9 +1,10 @@
 import Home from './routes/Home'
 import Signup from './routes/SignUp'
 import LogIn from './routes/LogIn'
-import ForgotPassword from './routes/ForgotPassword'
 import Tasks from './routes/Tasks'
 import MainLayout from './layouts/MainLayout'
+import ForgotPassword from './routes/ForgotPassword'
+import VerifyEmail from './routes/VerifyEmail'
 
 // Each logical "route" has two components, one for
 // the layout and one for the main area we want to render
@@ -42,6 +43,11 @@ const routes = [
   {
     path: '/forgot-password',
     main: ForgotPassword,
+    layout: MainLayout
+  },
+  {
+    path: '/verify-email/:token',
+    main: VerifyEmail,
     layout: MainLayout
   }
 ]

@@ -4,10 +4,12 @@ import gql from 'graphql-tag'
 import SignUp from './SignUp'
 
 const SIGNUP_MUTATION = gql`
-  mutation SignUp($email: String!, $password: String!) {
-    signup(email: $email, password: $password) {
-      id
-      email
+  mutation SignUp($input: SignupInput!) {
+    signup(input: $input) {
+      user {
+        id
+        email
+      }
       jwt
     }
   }
@@ -30,7 +32,7 @@ class SignupContainer extends Component {
             <SignUp
               formErrors={formErrors}
               onSubmit={({ email, password }) => {
-                signup({ variables: { email, password } })
+                signup({ variables: { input: { email, password } } })
               }}
             />
           )

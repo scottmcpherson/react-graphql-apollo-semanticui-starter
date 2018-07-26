@@ -1,11 +1,11 @@
 module.exports = (sequelize, DataTypes) => {
-  var Task = sequelize.define('Task', {
+  var Task = sequelize.define('task', {
     title: DataTypes.STRING,
     isPublic: DataTypes.BOOLEAN
   })
 
   Task.associate = models => {
-    Task.belongsTo(models.User)
+    Task.belongsTo(models.user)
   }
   return Task
 }

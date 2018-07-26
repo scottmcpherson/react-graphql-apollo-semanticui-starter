@@ -11,7 +11,6 @@ type User {
   lastName: String
   email: String
   password: String
-  jwt: String
 }
 
 type Message {
@@ -29,13 +28,74 @@ type Task {
   UserId: ID
 }
 
+input CreatePublicTaskInput {
+  title: String!
+}
+
+type CreateTaskPublicPayload {
+  task: Task
+}
+
+input CreatePrivateTaskInput {
+  title: String!
+}
+
+type CreateTaskPrivatePayload {
+  task: Task
+}
+
+input LoginInput {
+  email: String!, 
+  password: String!
+}
+
+type LoginPayload {
+  user: User
+  jwt: String
+}
+
+input SignupInput {
+  email: String!, 
+  password: String!
+}
+
+type SignupPayload {
+  user: User
+  jwt: String
+}
+
+input ForgotPasswordInput {
+  email: String!
+}
+
+type ForgotPasswordPayload {
+  message: String
+}
+
+input ResetPasswordInput {
+  token: String!
+}
+
+type ResetPasswordPayload {
+  message: String
+}
+
+input VerifyEmailInput {
+  token: String!
+}
+
+type VerifyEmailPayload {
+  message: String
+}
+
 type Mutation {
-  login(email: String!, password: String!): User
-  signup(email: String!, password: String!): User
-  forgotPassword(email: String!): Message
-  resetPassword(password: String!, token: String!): Message
-  addPublicTask(title: String!): Task
-  addPrivateTask(title: String!): Task
+  login(input: LoginInput!): LoginPayload
+  signup(input: SignupInput!): SignupPayload
+  forgotPassword(input: ForgotPasswordInput!): ForgotPasswordPayload
+  resetPassword(input: ResetPasswordInput!): ResetPasswordPayload
+  verifyEmail(input: VerifyEmailInput!): VerifyEmailPayload
+  createPublicTask(input: CreatePublicTaskInput!): CreateTaskPublicPayload
+  createPrivateTask(input: CreatePrivateTaskInput!): CreateTaskPrivatePayload
   deleteTask(id: ID!): Status
 }
 `

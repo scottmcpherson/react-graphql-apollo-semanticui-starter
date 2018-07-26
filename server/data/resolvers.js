@@ -1,16 +1,16 @@
 const db = require('../models')
 const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
+const crypto = require('crypto')
+const jsonWebToken = require('jsonwebtoken')
 const { AuthenticationError, UserInputError } = require('apollo-server-express')
-const User = db.User
-const Task = db.Task
+const User = db.user
+const Task = db.task
 
 const resolvers = {
   Query: {
     currentUser: async (root, {}, { user }) => {
-      if (!user) {
-        throw new AuthenticationError('Invalid token')
-      }
+      if (!user) throw new AuthenticationError('Invalid token')
+
       const loginInUser = await User.findOne({ where: { id: user.id } })
       return loginInUser
     },
@@ -21,18 +21,15 @@ const resolvers = {
       })
     },
     privateTasks: async (root, {}, { user }) => {
-      if (!user) {
-        throw new AuthenticationError('Invalid token')
-      }
-      return await Task.findAll({ where: { UserId: user.id, isPublic: false } })
+      if (!user) throw new AuthenticationError('Invalid token')
+
+      return await Task.findAll({ where: { userId: user.id, isPublic: false } })
     }
   },
   Mutation: {
-    login: async (root, { email, password }) => {
+    login: async (root, { input: { email, password } }) => {
       const user = await User.findOne({ where: { email } })
-      if (!user) {
-        throw new UserInputError('Email not found')
-      }
+      if (!user) throw new UserInputError('Email not found')
 
       const validPassword = await bcrypt.compare(password, user.password)
 
@@ -40,64 +37,110 @@ const resolvers = {
         throw new UserInputError('Email or password is incorrect')
       }
 
-      user.jwt = jwt.sign({ id: user.id }, process.env.JWT_SECRET)
+      const jwt = jsonWebToken.sign({ id: user.id }, process.env.JWT_SECRET)
 
-      return user
+      return { user, jwt }
     },
-    signup: async (root, { email, password }) => {
+    signup: async (root, { input: { email, password } }) => {
       const existingUser = await User.findOne({ where: { email } })
 
-      if (existingUser) {
-        throw new UserInputError('Email already used')
-      }
+      if (existingUser) throw new UserInputError('Email already used')
+
       const hash = await bcrypt.hash(password, 10)
+      const token = crypto.randomBytes(20).toString('hex')
+      const tokenExpiration = Date.now() + 10800000 // In 3 hours
+
+      // This url will need to be read dynamically from somewhere
+      // to reflect the environment that it is created in
+      // or possibly be changed based off of your setup
+      const link = `http://localhost:3000/verify-email/${token}`
+
+      // You will need to setup an email service here
+      console.log('')
+      console.error(`This needs to be implemented on the backend`)
+      console.log(
+        `For testing purposes, here is your email verification link: ${link}`
+      )
+      console.log('')
 
       const user = await User.create({
         email,
-        password: hash
+        password: hash,
+        token,
+        tokenExpiration
       })
 
-      user.jwt = jwt.sign({ id: user.id }, process.env.JWT_SECRET)
+      const jwt = jsonWebToken.sign({ id: user.id }, process.env.JWT_SECRET)
 
-      return user
+      return { user, jwt }
     },
-    forgotPassword: async (root, { email }, { user }) => {
-      if (!user) {
-        throw new AuthenticationError('Invalid token')
-      }
+    forgotPassword: async (root, { input: { email } }) => {
+      const user = await User.findOne({ where: { email } })
+      if (!user) throw new UserInputError('No Search Results')
 
-      console.log(`Forgot password email here for ${email}`)
+      const token = crypto.randomBytes(20).toString('hex')
+      const tokenExpiration = Date.now() + 10800000 // In 3 hours
+      await user.update({ token, tokenExpiration })
+
+      // This url will need to be read dynamically from somewhere
+      // to reflect the environment that it is created in
+      // or possibly be changed based off of your setup
+      const link = `http://localhost:3000/reset-password/${token}`
+
+      // You will need to setup an email service here
+      console.log('')
+      console.error(`This needs to be implemented on the backend`)
+      console.log(
+        `For testing purposes, here is your password reset verification link: ${link}`
+      )
+      console.log('')
+
+      return { message: 'Success! Check your server logs for a test link' }
+    },
+
+    resetPassword: async (root, { input: { password, token } }) => {
+      const user = await User.findOne({ where: { token } })
+      if (!user) throw new UserInputError('Invalid token')
+      const hash = await bcrypt.hash(password, 10)
+
+      await user.update({
+        password: hash,
+        token: null,
+        tokenExpiration: null
+      })
 
       return { message: 'Success' }
     },
-    resetPassword: async (root, { password, token }, { user }) => {
-      if (!user) {
-        throw new AuthenticationError('Invalid token')
-      }
+    verifyEmail: async (root, { input: { token } }) => {
+      const user = await User.findOne({ where: { token } })
+      if (!user) throw new UserInputError('Invalid token')
 
-      console.log(`Reset password here`)
+      await user.update({
+        token: null,
+        tokenExpiration: null,
+        isEmailVerified: true
+      })
 
       return { message: 'Success' }
     },
-    addPublicTask: async (root, { title }) => {
+    createPublicTask: async (root, { input: { title } }) => {
       const task = await Task.create({
         title,
         isPublic: true
       })
       return task
     },
-    addPrivateTask: async (root, { title }, { user }) => {
-      if (!user) {
-        throw new AuthenticationError('Invalid token')
-      }
-      return await Task.create({
+    createPrivateTask: async (root, { input: { title } }, { user }) => {
+      if (!user) throw new AuthenticationError('Invalid token')
+      const task = await Task.create({
         title,
-        UserId: user.id,
+        userId: user.id,
         isPublic: false
       })
+      return task
     },
     deleteTask: async (root, { id }) => {
-      const task = await Task.destroy({ where: { id } })
+      await Task.destroy({ where: { id } })
       return { status: 'ok' }
     }
   }

@@ -3,7 +3,7 @@ import { Button, Form, Message, Segment } from 'semantic-ui-react'
 import { Field, reduxForm } from 'redux-form'
 import { Link } from 'react-router-dom'
 import TextField from '../../components/TextField'
-import FormMessageErrors from '../../components/FormMessageErrors'
+import FormMessage from '../../components/FormMessage'
 import AuthFormContainer from '../../components/AuthFormContainer'
 import { required, email } from '../../utils/validations'
 
@@ -13,7 +13,7 @@ const SignUpForm = ({ handleSubmit, pristine, submitting, formErrors }) => {
     <AuthFormContainer header="Sign up">
       <Form size="large" onSubmit={handleSubmit} error={isFormErrors}>
         <Segment>
-          <FormMessageErrors errors={formErrors} />
+          <FormMessage color="red" messages={formErrors} />
           <Field
             name="email"
             label="Email"

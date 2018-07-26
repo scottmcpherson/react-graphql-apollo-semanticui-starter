@@ -4,28 +4,35 @@ import { Input } from 'semantic-ui-react'
 import { PUBLIC_TASKS_QUERY, PRIVATE_TASKS_QUERY } from '../TasksList'
 import { Mutation } from 'react-apollo'
 
-const ADD_PRIVATE_TASK_MUTATION = gql`
-  mutation addPrivateTask($title: String!) {
-    addPrivateTask(title: $title) {
-      id
-      title
+// Nesting using inputs to avoid overly verbose APIs
+// This article provides a good explanation:
+// https://blog.apollographql.com/designing-graphql-mutations-e09de826ed97
+const CREATE_PRIVATE_TASK_MUTATION = gql`
+  mutation createPrivateTask($input: CreatePrivateTaskInput!) {
+    createPrivateTask(input: $input) {
+      task {
+        id
+        title
+      }
     }
   }
 `
 
-const ADD_PUBLIC_TASK_MUTATION = gql`
-  mutation addPublicTask($title: String!) {
-    addPublicTask(title: $title) {
-      id
-      title
+const CREATE_PUBLIC_TASK_MUTATION = gql`
+  mutation createPublicTask($input: CreatePublicTaskInput!) {
+    createPublicTask(input: $input) {
+      task {
+        id
+        title
+      }
     }
   }
 `
 
 const AddTask = ({ isPrivateTasks }) => {
   const mutation = isPrivateTasks
-    ? ADD_PRIVATE_TASK_MUTATION
-    : ADD_PUBLIC_TASK_MUTATION
+    ? CREATE_PRIVATE_TASK_MUTATION
+    : CREATE_PUBLIC_TASK_MUTATION
 
   const query = isPrivateTasks ? PRIVATE_TASKS_QUERY : PUBLIC_TASKS_QUERY
 
@@ -40,8 +47,9 @@ const AddTask = ({ isPrivateTasks }) => {
             onKeyUp={evt => {
               if (evt.keyCode === 13) {
                 evt.persist()
+                const input = { title: evt.target.value }
                 addTask({
-                  variables: { title: evt.target.value }
+                  variables: { input }
                 }).then(() => {
                   evt.target.value = ''
                 })

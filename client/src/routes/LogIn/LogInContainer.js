@@ -4,10 +4,12 @@ import gql from 'graphql-tag'
 import LogIn from './LogIn'
 
 const LOGIN_MUTATION = gql`
-  mutation LogIn($email: String!, $password: String!) {
-    login(email: $email, password: $password) {
-      id
-      email
+  mutation LogIn($input: LoginInput!) {
+    login(input: $input) {
+      user {
+        id
+        email
+      }
       jwt
     }
   }
@@ -29,7 +31,7 @@ class LogInContainer extends Component {
             <LogIn
               formErrors={formErrors}
               onSubmit={({ email, password }) => {
-                login({ variables: { email, password } })
+                login({ variables: { input: { email, password } } })
               }}
             />
           )
