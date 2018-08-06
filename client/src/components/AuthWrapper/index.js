@@ -21,7 +21,7 @@ class AuthWrapper extends React.Component {
     // after they login or signup.
     // It would be much better to just update
     // the local currentUser with the returned user data
-    // but this issue is preventing that:
+    // but the following issue is preventing that:
     // https://github.com/apollographql/react-apollo/issues/2209
     if (this.refetch && isFunction(this.refetch)) {
       // Need to wait for the user fetch to complete

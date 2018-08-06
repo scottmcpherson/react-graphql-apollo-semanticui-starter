@@ -7,7 +7,7 @@ import { Mutation } from 'react-apollo'
 // Nesting using inputs to avoid overly verbose APIs
 // This article provides a good explanation:
 // https://blog.apollographql.com/designing-graphql-mutations-e09de826ed97
-const CREATE_PRIVATE_TASK_MUTATION = gql`
+export const CREATE_PRIVATE_TASK_MUTATION = gql`
   mutation createPrivateTask($input: CreatePrivateTaskInput!) {
     createPrivateTask(input: $input) {
       id
@@ -16,7 +16,7 @@ const CREATE_PRIVATE_TASK_MUTATION = gql`
   }
 `
 
-const CREATE_PUBLIC_TASK_MUTATION = gql`
+export const CREATE_PUBLIC_TASK_MUTATION = gql`
   mutation createPublicTask($input: CreatePublicTaskInput!) {
     createPublicTask(input: $input) {
       id

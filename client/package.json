@@ -6,7 +6,7 @@
     "apollo-boost": "0.1.10",
     "apollo-link": "1.2.2",
     "apollo-link-context": "1.0.7",
-    "apollo-link-error": "1.1.0",
+    "apollo-link-error": "1.1.4",
     "graphql": "0.13.2",
     "graphql-tag": "2.8.0",
     "lodash": "4.17.10",
@@ -15,7 +15,8 @@
     "react-dom": "^16.2.0",
     "react-redux": "5.0.7",
     "react-router-dom": "4.2.2",
-    "react-scripts": "1.1.1",
+    "react-scripts": "1.1.4",
+    "react-test-renderer": "16.4.2",
     "redux": "3.7.2",
     "redux-form": "7.2.3",
     "redux-thunk": "2.2.0",
@@ -27,5 +28,6 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
-  }
+  },
+  "devDependencies": {}
 }
