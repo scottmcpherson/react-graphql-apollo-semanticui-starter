@@ -18,13 +18,13 @@ it('should create public task', async () => {
   ]
 
   const component = TestRenderer.create(
-    <MockedProvider mocks={mocks}>
+    <MockedProvider mocks={mocks} addTypename={false}>
       <AddTask isPrivateTasks={false} />
     </MockedProvider>
   )
 
   const input = component.root.findByType('input')
-  console.log('input.props:: ', input.props)
+
   input.props.onKeyUp({
     keyCode: 13,
     persist: () => {},
