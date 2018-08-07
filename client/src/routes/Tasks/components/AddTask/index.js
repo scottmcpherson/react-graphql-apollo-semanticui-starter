@@ -40,14 +40,15 @@ const AddTask = ({ isPrivateTasks }) => {
             icon="add"
             iconPosition="left"
             placeholder="Add task..."
-            onKeyUp={evt => {
-              if (evt.keyCode === 13) {
-                evt.persist()
-                const input = { title: evt.target.value }
+            onKeyUp={e => {
+              if (e.keyCode === 13) {
+                e.persist()
+                const input = { title: e.target.value }
+                console.log('input:: ', input)
                 addTask({
                   variables: { input }
                 }).then(() => {
-                  evt.target.value = ''
+                  e.target.value = ''
                 })
               }
             }}
