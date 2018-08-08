@@ -44,7 +44,6 @@ const AddTask = ({ isPrivateTasks }) => {
               if (e.keyCode === 13) {
                 e.persist()
                 const input = { title: e.target.value }
-                console.log('input:: ', input)
                 addTask({
                   variables: { input }
                 }).then(() => {
